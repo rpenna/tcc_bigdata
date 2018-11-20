@@ -1,0 +1,4 @@
+
+5740000 linhas importadas
+Tempo parcial MySQL: 330077.20828099904 segundos
+Tempo parcial MongoDB: 15018.256465999964 segundos

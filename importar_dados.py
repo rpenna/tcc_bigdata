@@ -7,12 +7,6 @@ from pymongo import MongoClient
 from datetime import datetime, timedelta
 
 
-def query_mysql(cursor, query, parametros=None):
-    "Faz uma consulta ao banco de dados"
-    cursor.execute(query, parametros)
-    return cursor.fetchall()
-
-
 def executar_mysql(con, cursor, query, parametros=None):
     "Manipula o banco de dados MySQL"
     cursor.execute(query, parametros)
@@ -106,25 +100,28 @@ def importar_arquivo(bolsa_familia, con, cursor, client, db, total_pagtos):
 
     # processamento do arquivo a cada 1000 linhas
     while dado:
-        tempo_importacao_mongo = 0
-        tempo_importacao_mysql = 0
-        while dado and len(dados) < 1000:
-            dado = bolsa_familia.readline()
-            dados.append(dado)
-        tamanho_arquivo += len(dados)
-        total_pagtos += tamanho_arquivo
-        for beneficio in dados:
-            beneficio = str(beneficio).replace('\"', '').replace("\\r\\n", '').replace("\'", '').split(';')
-            if len(beneficio) > 1:
-                tempo_importacao_mysql += importar_mysql(con, cursor, beneficio)
-                tempo_importacao_mongo += importar_mongo(client, db, beneficio)
-        tempo_mysql += tempo_importacao_mysql
-        tempo_mongo += tempo_importacao_mongo
-        dados = []
-        print("{} linhas importadas\nTempo parcial MySQL: {} segundos\nTempo parcial MongoDB: {} segundos\n-----".format(tamanho_arquivo, tempo_mysql, tempo_mongo))
-        print("{} linhas importadas\nTempo para importacao de até 1000 linhas no MySQL: {} segundos\nTempo para importacao de 1000 linhas no MongoDB: {} segundos\n-----\n".format(tamanho_arquivo, tempo_importacao_mysql, tempo_importacao_mongo))
-        tempo_acumulado += "{},{},{}\n".format(total_pagtos, tempo_mysql, tempo_mongo)
-        tempo_instantaneo += "{},{},{}\n".format(total_pagtos, tempo_importacao_mysql, tempo_importacao_mongo) 
+        try:
+            tempo_importacao_mongo = 0
+            tempo_importacao_mysql = 0
+            while dado and len(dados) < 1000:
+                dado = bolsa_familia.readline()
+                dados.append(dado)
+            tamanho_arquivo += len(dados)
+            for beneficio in dados:
+                beneficio = str(beneficio).replace('\"', '').replace("\\r\\n", '').replace("\'", '').split(';')
+                if len(beneficio) > 1:
+                    tempo_importacao_mysql += importar_mysql(con, cursor, beneficio)
+                    tempo_importacao_mongo += importar_mongo(client, db, beneficio)
+            tempo_mysql += tempo_importacao_mysql
+            tempo_mongo += tempo_importacao_mongo
+            dados = []
+            print("{} linhas importadas\nTempo parcial MySQL: {} segundos\nTempo parcial MongoDB: {} segundos\n-----".format(tamanho_arquivo, tempo_mysql, tempo_mongo))
+            print("{} linhas importadas\nTempo para importacao de até 1000 linhas no MySQL: {} segundos\nTempo para importacao de 1000 linhas no MongoDB: {} segundos\n-----\n".format(tamanho_arquivo, tempo_importacao_mysql, tempo_importacao_mongo))
+            tempo_acumulado += "{},{},{}\n".format(tamanho_arquivo, tempo_mysql, tempo_mongo)
+            tempo_instantaneo += "{},{},{}\n".format(tamanho_arquivo, tempo_importacao_mysql, tempo_importacao_mongo) 
+        except KeyboardInterrupt:
+            print("Excecao detectada, encerrando importacao")
+            return tamanho_arquivo, tempo_mysql, tempo_mongo, tempo_acumulado, tempo_instantaneo
     return tamanho_arquivo, tempo_mysql, tempo_mongo, tempo_acumulado, tempo_instantaneo
 
 def main():
@@ -142,11 +139,11 @@ def main():
     csv_tempo_por_importacao = "Arquivos importados,Tempo da importação no MySQL,Tempo da importação MongoDB\n"
 
     # conexao dos bancos de dados
-    con = mysql.connector.Connect(user="root", password='', host="127.0.0.1", database="bd_bolsa_familia")
+    con = mysql.connector.Connect(user="root", password='', host="127.0.0.1", database="bd_teste")
     cursor = con.cursor(dictionary=True)
     
     client = MongoClient("localhost", 27017)
-    db = client.bd_bolsa_familia
+    db = client.bd_teste
     
     # importacao dos arquivos para os bancos de dados
     for arquivo in arquivos:

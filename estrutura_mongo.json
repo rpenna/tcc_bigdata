@@ -1,0 +1,18 @@
+{
+    "localidade": {
+        "id_cidade": <id da cidade>,
+        "no_cidade": "<nome da cidade>",
+        "no_uf": "<silga do estado>"
+    },
+    "beneficiario": {
+        "nu_nis": <numero NIS do beneficiario>,
+        "no_beneficiario": "<nome do beneficiario>",
+    },
+    "pagamentos": [
+        {
+            "dt_referencia": "<data de referencia>",
+            "dt_competencia": "<data de competencia>",
+            "vl_beneficio": <valor do beneficio>
+        }
+    ]
+}

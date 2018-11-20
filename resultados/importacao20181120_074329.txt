@@ -1,0 +1,8 @@
+
+#####
+Importacao de 201809_BolsaFamilia_Pagamentos.csv concluida com 1476000 pagamentos!
+-----
+IMPORTAÇÃO FINALIZADA
+Um total de 1476000 pagamentos foram identificados.
+Tempo total para importacao de dados para o MySQL: 29487.729813000013 segundos
+Tempo total para importacao de dados para o MongoDB: 2736.424185999999 segundos
