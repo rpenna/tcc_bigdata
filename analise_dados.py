@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """ Testes a serem feitos:
-    1) Cidades cadastradas - FEITO
-    2) Cidades com mais beneficiados - FEITO
-    3) Cidades com o maior valor pago - FEITO
-    4) Valor total pago registrado (soma de todos os resgistros) - FEITO
-    5) Beneficiado que mais recebeu - FEITO
-    6) Valor pago por mês de competência - FEITO"""
+    1) Cidades cadastradas
+    2) Cidades com mais beneficiados
+    3) Cidades com o maior valor pago
+    4) Valor total pago registrado (soma de todos os resgistros)
+    5) Beneficiado que mais recebeu
+    6) Valor pago por mês de competência"""
 import os
 import mysql.connector
 import pprint
@@ -39,13 +39,13 @@ def realizar_pesquisa(descricao, query, cursor, operacao_mongo, parametros=None,
     tempo_mongo = (datetime.now() - inicio).total_seconds()
     return {
         "descricao": descricao,
-        "mysql": {
-            "tempo": tempo_mysql,
-            "resultado": resultado_mysql
+        "tempos": {
+            "my_sql": tempo_mysql,
+            "mongo": tempo_mongo
         },
-        "mongo": {
-            "tempo": tempo_mongo,
-            "resultado": list(resultado_mongo)
+        "resultados": {
+            "my_sql": resultado_mysql,
+            "mongo": list(resultado_mongo)
         }
     }
 
@@ -183,24 +183,27 @@ def buscar_valor_por_mes_competencia(cursor, colecao):
 
 def main():
     # conexao dos bancos de dados
-    con = mysql.connector.Connect(user="root", password='', host="127.0.0.1", database="bd_bolsa_familia", connection_timeout=1800)
+    con = mysql.connector.Connect(user="root", password='', host="127.0.0.1", database="bd_bolsa_familia")
     cursor = con.cursor(dictionary=True)
     
     client = MongoClient("localhost", 27017)
     db = client.bd_bolsa_familia
 
     resultados =  []
-    #resultados.append(listar_cidades(cursor, db.beneficios))
-    #resultados.append(listar_cidades_com_mais_beneficiados(cursor, db.beneficios))
-    #resultados.append(listar_cidades_com_maior_valor_pago(cursor, db.beneficios))
-    #resultados.append(calcular_valor_total_pago(cursor, db.beneficios))
-    #resultados.append(buscar_maior_beneficiado(cursor, db.beneficios))
+    resultados.append(listar_cidades(cursor, db.beneficios))
+    resultados.append(listar_cidades_com_mais_beneficiados(cursor, db.beneficios))
+    resultados.append(listar_cidades_com_maior_valor_pago(cursor, db.beneficios))
+    resultados.append(calcular_valor_total_pago(cursor, db.beneficios))
+    resultados.append(buscar_maior_beneficiado(cursor, db.beneficios))
     resultados.append(buscar_valor_por_mes_competencia(cursor, db.beneficios))
 
     path_local = os.path.dirname(os.path.realpath(__file__))
-    path_json = os.path.join(path_local, "resultados/resultado_analise.json" )
-    with open(path_json, "w+") as saida:
-        saida.write(dumps(resultados, indent=4))
+    i = 1
+    for resultado in resultados:
+        path_json = os.path.join(path_local, "resultados/teste{}.json".format(i))
+        with open(path_json, "w+") as saida:
+            saida.write(dumps(resultado, indent=4))
+        i += 1
     
 
 if __name__ == "__main__":

@@ -1,0 +1,117 @@
+{
+    "descricao": "Retorna o valor total pago em beneficios por cada mes de compet\u00eancia",
+    "tempos": {
+        "my_sql": 330.055912,
+        "mongo": 28.983714
+    },
+    "resultados": {
+        "my_sql": [
+            {
+                "dt_competencia": "201709",
+                "total": 814.0
+            },
+            {
+                "dt_competencia": "201710",
+                "total": 7654.0
+            },
+            {
+                "dt_competencia": "201711",
+                "total": 7962.0
+            },
+            {
+                "dt_competencia": "201712",
+                "total": 9624.0
+            },
+            {
+                "dt_competencia": "201801",
+                "total": 19240.0
+            },
+            {
+                "dt_competencia": "201802",
+                "total": 36740.0
+            },
+            {
+                "dt_competencia": "201803",
+                "total": 50550.0
+            },
+            {
+                "dt_competencia": "201804",
+                "total": 699712.0
+            },
+            {
+                "dt_competencia": "201805",
+                "total": 1038924.0
+            },
+            {
+                "dt_competencia": "201806",
+                "total": 3630860.0
+            },
+            {
+                "dt_competencia": "201807",
+                "total": 5048382.0
+            },
+            {
+                "dt_competencia": "201808",
+                "total": 7114631.0
+            },
+            {
+                "dt_competencia": "201809",
+                "total": 1093931119.0
+            }
+        ],
+        "mongo": [
+            {
+                "_id": "201801",
+                "total": 19240.0
+            },
+            {
+                "_id": "201805",
+                "total": 1038924.0
+            },
+            {
+                "_id": "201803",
+                "total": 50550.0
+            },
+            {
+                "_id": "201802",
+                "total": 36740.0
+            },
+            {
+                "_id": "201804",
+                "total": 699712.0
+            },
+            {
+                "_id": "201808",
+                "total": 7114631.0
+            },
+            {
+                "_id": "201709",
+                "total": 814.0
+            },
+            {
+                "_id": "201807",
+                "total": 5048382.0
+            },
+            {
+                "_id": "201711",
+                "total": 7962.0
+            },
+            {
+                "_id": "201806",
+                "total": 3630860.0
+            },
+            {
+                "_id": "201712",
+                "total": 9624.0
+            },
+            {
+                "_id": "201809",
+                "total": 1093931119.0
+            },
+            {
+                "_id": "201710",
+                "total": 7654.0
+            }
+        ]
+    }
+}

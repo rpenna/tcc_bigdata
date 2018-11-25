@@ -1,0 +1,31 @@
+{
+    "descricao": "Retorna os dados com o NIS que recebeu mais benef\u00edcios",
+    "tempos": {
+        "my_sql": 801.111257,
+        "mongo": 100.079915
+    },
+    "resultados": {
+        "my_sql": [
+            {
+                "nu_nis": 21057266495,
+                "no_beneficiario": "MAIUAPUTIRE KAAPOR",
+                "no_cidade": "CENTRO NOVO DO MARANHAO",
+                "no_uf": "MA",
+                "valor": 3948.0
+            }
+        ],
+        "mongo": [
+            {
+                "_id": 21057266495,
+                "valor": 3948.0,
+                "infos": [
+                    {
+                        "nome": "MAIUAPUTIRE KAAPOR",
+                        "cidade": "CENTRO NOVO DO MARANHAO",
+                        "estado": "MA"
+                    }
+                ]
+            }
+        ]
+    }
+}

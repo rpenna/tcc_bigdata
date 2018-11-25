@@ -1,0 +1,20 @@
+{
+    "descricao": "Calcula o valor somado de todos os benef\u00edcios pagos",
+    "tempos": {
+        "my_sql": 126.024989,
+        "mongo": 31.653242
+    },
+    "resultados": {
+        "my_sql": [
+            {
+                "sum(vl_beneficio)": 1111596212.0
+            }
+        ],
+        "mongo": [
+            {
+                "_id": null,
+                "total": 1111596212.0
+            }
+        ]
+    }
+}
