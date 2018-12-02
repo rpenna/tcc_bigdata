@@ -1,3 +1,4 @@
+"Código que agrupa os tempos de importação de mil linhas em conjuntos 25 mil linhas"
 import os
 
 path_local = os.path.dirname(os.path.realpath(__file__))
@@ -11,7 +12,7 @@ with open(path_csv, "r") as arq_csv:
         total_mongo = 0
         ultima_linha = 0
         linhas = []
-        for _ in range(0, 75):
+        for _ in range(0, 25):
             linhas.append(arq_csv.readline())
         print(linhas)
         for linha in linhas:
